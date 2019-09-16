@@ -4,7 +4,7 @@ go-blih is a Go client library for Blih (the Epitech bocal API).
 
 ## Installation
 
-You can use `go get` to install the latest version of the library. This command will install the the library and its dependencies:
+You can use `go get` to install the latest version of the library. This command will install the library and its dependencies:
 
 ```go
 go get -u github.com/ShellBear/go-blih/blih
