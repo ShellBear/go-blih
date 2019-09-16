@@ -18,27 +18,29 @@ const (
 )
 
 type Service struct {
-	User    string
-	token   string
-	ctx     context.Context
-	BaseURL string
-	client  *http.Client
+	User      string
+	token     string
+	ctx       context.Context
+	BaseURL   string
+	UserAgent string
+	client    *http.Client
 
 	Utils      *UtilsService
 	Repository *RepositoryService
 	SSHKey     *SSHKeyService
 }
 
-func New(user, token string, ctx context.Context, baseURL string) *Service {
+func New(user, token string, ctx context.Context) *Service {
 	h := sha512.New()
 	h.Write([]byte(token))
 
 	s := &Service{
-		User:    user,
-		token:   hex.EncodeToString(h.Sum(nil)),
-		BaseURL: baseURL,
-		ctx:     ctx,
-		client:  http.DefaultClient,
+		User:      user,
+		token:     hex.EncodeToString(h.Sum(nil)),
+		BaseURL:   DefaultApiBaseURL,
+		UserAgent: DefaultUserAgent,
+		ctx:       ctx,
+		client:    http.DefaultClient,
 	}
 
 	s.Utils = NewUtilsService(s)
@@ -95,7 +97,7 @@ func (c *Service) NewRequest(endpoint, method string, body interface{}) (*http.R
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", DefaultUserAgent)
+	req.Header.Set("User-Agent", c.UserAgent)
 
 	return req, nil
 }
