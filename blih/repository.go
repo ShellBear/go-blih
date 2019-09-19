@@ -53,7 +53,7 @@ type Repository struct {
 	Type string `json:"type"`
 
 	// An optional description
-	Description string `json:"description"`
+	Description string `json:"description,omitempty"`
 }
 
 type RepositoryListEntry struct {
